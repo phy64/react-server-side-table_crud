@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { AdminList, Admin, Error } from './pages';
 
-function App() {
+function App () {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
+    <Router basename={process.env.PUBLIC_URL}>
+      <nav className="navbar navbar-expand navbar-dark bg-dark" style={{minWidth: '1140px'}}>
+        <a href={`${process.env.PUBLIC_URL}/`} className="navbar-brand">
+          REACT CRUD
         </a>
-      </header>
-    </div>
-  );
-}
+      </nav>
+      <div className="container mt-3" style={{width: '1140px', maxWidth: 'none'}}>
+        <Switch>
+          <Route exact path={["/", "/admin"]} component={AdminList}/>
+          <Route exact path="/admin" component={AdminList}/>
+          <Route exact path="/admin/new" component={Admin}/>
+          <Route exact path="/admin/:id" component={Admin}/>
+          <Route exact path="/error" component={Error}/>
+          <Redirect to="/error" />
+        </Switch>
+      </div>
+    </Router>
+  )
+};
 
 export default App;
